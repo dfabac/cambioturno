@@ -80,6 +80,9 @@ class editmail_window(tk.Tk):
         cfg_win.transient(self)
         cfg_win.grab_set()
         self.wait_window(cfg_win)
+        if cfg.hasChanged():
+            self.text1.delete(1.0,'end-1c')
+            self.text1.insert(1.0, cfg.get('MAIL_BODY'))
 
 
 

@@ -7,6 +7,7 @@ from ConfigParser import SafeConfigParser
 
 class Config(object):
 	_instance = None
+	_saved = False
 
 	cfg_vals = {}
 
@@ -89,8 +90,14 @@ class Config(object):
 			fp = codecs.open(self.fn, 'wb', encoding='utf-8')
 			self.parser.write(fp)
 			fp.close()
+			self._saved = True
 		except:
 			raise ConfigException(u"Error al escribir: %s" % self.fn)
+
+	def hasChanged(self):
+		res = self._saved
+		if self._saved: self._saved = False
+		return res
 
 
 class ConfigException(Exception):
